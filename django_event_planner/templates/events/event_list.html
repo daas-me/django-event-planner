@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Planner</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Upcoming Events</h1>
+    <ul>
+        {% for event in events %}
+            <li>
+                <strong>{{ event.title }}</strong><br>
+                {{ event.date }} at {{ event.time }} - {{ event.location }}
+                <p>{{ event.description }}</p>
+            </li>
+        {% empty %}
+            <li>No events yet!</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
