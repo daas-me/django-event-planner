@@ -1,21 +1,39 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Event Planner</title>
+    <meta charset="UTF-8">
+    <title>Event List</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Upcoming Events</h1>
-    <ul>
-        {% for event in events %}
-            <li>
-                <strong>{{ event.title }}</strong><br>
-                {{ event.date }} at {{ event.time }} - {{ event.location }}
-                <p>{{ event.description }}</p>
-            </li>
-        {% empty %}
-            <li>No events yet!</li>
-        {% endfor %}
-    </ul>
+   <header class="header-flex">
+    <h1>Event List</h1>
+    <a href="{% url 'event_create' %}" class="btn-add">
+        <span class="plus">+</span> Add Event
+    </a>
+</header>
+
+
+    <main>
+        {% if events %}
+            <div class="event-grid">
+                {% for event in events %}
+                    <div class="event-card">
+                        <h2>{{ event.name }}</h2>
+                        <p><strong>Date:</strong> {{ event.date|date:"F j, Y" }}</p>
+                        <p><strong>Location:</strong> {{ event.location }}</p>
+
+                         <form action="{% url 'event_delete' event.pk %}" method="post" style="margin-top: 0.5rem;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete">Delete</button>
+                         </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No events available. <a href="{% url 'event_create' %}">Create one</a>.</p>
+        {% endif %}
+    </main>
 </body>
 </html>
