@@ -1,0 +1,45 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Event</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Header with flex layout -->
+    <header class="header-flex">
+        <h1>Create New Event</h1>
+        <a href="{% url 'event_list' %}" class="btn-add back-btn">
+            <span class="plus">⬅</span> Back to Events
+        </a>
+    </header>
+
+    <main>
+        <form method="post" class="event-form">
+            {% csrf_token %}
+            
+            <!-- Event Name -->
+            <div class="form-group">
+                <label for="id_name">Event Name</label>
+                {{ form.name|add_class:"form-control" }}
+            </div>
+
+            <!-- Event Date -->
+            <div class="form-group">
+                <label for="id_date">Date</label>
+                {{ form.date|add_class:"form-control" }}
+            </div>
+
+            <!-- Event Location -->
+            <div class="form-group">
+                <label for="id_location">Location</label>
+                {{ form.location|add_class:"form-control" }}
+            </div>
+
+            <button type="submit">Save Event</button>
+        </form>
+    </main>
+</body>
+</html>
